@@ -8,6 +8,11 @@ interface IState {
   dispatch: any;
 }
 
+interface IAction {
+  type: string;
+  payload: any;
+}
+
 interface IStoreProvider {
   children: any;
 }
@@ -20,9 +25,9 @@ const initialState: IState = {
   dispatch: null,
 };
 
-export const Store = createContext(initialState);
+export const Store = createContext<IState>(initialState);
 
-function reducer(state: IState, action: { type: string; payload: any }) {
+function reducer(state: IState, action: IAction): IState {
   switch (action.type) {
     case "CART_ADD_ITEM":
       const newItem = action.payload;

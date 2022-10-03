@@ -24,7 +24,7 @@ export default function ProductScreen() {
 
     const quantity = existItem ? existItem.quantity + 1 : 1;
 
-    if (product?.countInStock < quantity) {
+    if (product?.countInStock && product?.countInStock < quantity) {
       alert("Sorry, product is out of stock");
       return;
     }
