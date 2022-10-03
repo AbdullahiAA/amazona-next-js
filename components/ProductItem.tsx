@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -10,11 +11,14 @@ export default function ProductItem({ product }: IProductItem) {
   return (
     <div className="card">
       <Link href={`/product/${product.slug}`}>
-        <a>
-          <img
+        <a className="shadow block">
+          <Image
             src={product.image}
             alt={product.name}
-            className="rounded shadow"
+            width={100}
+            height={100}
+            layout="responsive"
+            className="rounded"
           />
         </a>
       </Link>

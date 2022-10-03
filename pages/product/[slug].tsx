@@ -30,6 +30,7 @@ export default function ProductScreen() {
             width={640}
             height={640}
             layout="responsive"
+            className="rounded"
           />
         </div>
 
@@ -47,7 +48,7 @@ export default function ProductScreen() {
           </ul>
         </div>
 
-        <div className="card p-5 flex flex-col gap-2">
+        <div className="card p-5 flex flex-col gap-2 h-fit">
           <div className="flex justify-between">
             <h3>Price</h3>
             <p>${product.price}</p>
