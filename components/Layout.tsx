@@ -4,7 +4,7 @@ import React from "react";
 
 type ILayout = {
   title?: string;
-  children: JSX.Element | string;
+  children: any;
 };
 
 export default function Layout({ title, children }: ILayout) {

@@ -21,7 +21,9 @@ export default function ProductItem({ product }: IProductItem) {
 
       <div className="flex flex-col items-center justify-center p-5 gap-2">
         <Link href={`/product/${product.slug}`}>
-          <h2 className="text-lg font-semibold">{product.name}</h2>
+          <a>
+            <h2 className="text-lg font-semibold">{product.name}</h2>
+          </a>
         </Link>
 
         <p>{product.brand}</p>
