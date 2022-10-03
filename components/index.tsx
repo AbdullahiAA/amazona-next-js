@@ -1,4 +1,4 @@
 import Layout from "./Layout";
-import Product from "./Product";
+import ProductItem from "./ProductItem";
 
-export { Layout, Product };
+export { Layout, ProductItem };
