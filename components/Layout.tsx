@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
+import { Store } from "../utils/Store";
 
 type ILayout = {
   title?: string;
@@ -8,6 +9,9 @@ type ILayout = {
 };
 
 export default function Layout({ title, children }: ILayout) {
+  const { cart, state, dispatch } = useContext(Store);
+  // const { cart } = state;
+
   return (
     <>
       <Head>
@@ -20,15 +24,22 @@ export default function Layout({ title, children }: ILayout) {
       </Head>
 
       <div className="flex flex-col min-h-screen">
-        <header className="shadow-lg p-4">
+        <header className="shadow-lg p-4 sticky top-0 z-50 bg-white">
           <nav className="flex justify-between items-center">
             <Link href="/">
               <a className="text-lg font-bold">amazona</a>
             </Link>
 
-            <div>
+            <div className="flex">
               <Link href="/cart">
-                <a className="p-2">Cart</a>
+                <a className="p-2">
+                  Cart
+                  {cart.cartItems.length > 0 && (
+                    <span className="ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
+                      {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                    </span>
+                  )}
+                </a>
               </Link>
 
               <Link href="/cart">
