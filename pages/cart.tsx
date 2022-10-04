@@ -22,6 +22,15 @@ export default function Cart() {
     });
   }
 
+  function updateQuantity(item: IProduct, qty: string) {
+    const quantity = Number(qty);
+
+    dispatch({
+      type: "CART_ADD_ITEM",
+      payload: { ...item, quantity },
+    });
+  }
+
   return (
     <Layout title="Shopping Cart">
       <h1 className="mb-4 text-xl">Shopping Cart</h1>
@@ -58,7 +67,20 @@ export default function Cart() {
                         </a>
                       </Link>
                     </td>
-                    <td className="p-5 text-right">{item.quantity}</td>
+                    <td className="p-5 text-right">
+                      <select
+                        value={item.quantity}
+                        onChange={(e) => updateQuantity(item, e.target.value)}
+                      >
+                        {[...Array.from(Array(item.countInStock).keys())].map(
+                          (x) => (
+                            <option key={x + 1} value={x + 1}>
+                              {x + 1}
+                            </option>
+                          )
+                        )}
+                      </select>
+                    </td>
                     <td className="p-5 text-right">{item.price}</td>
                     <td className="p-5 text-center">
                       <button onClick={() => removeItem(item)}>
