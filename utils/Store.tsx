@@ -26,7 +26,7 @@ export const Store = createContext<any>(null);
 
 function reducer(state: IState, action: IAction): IState {
   switch (action.type) {
-    case "CART_ADD_ITEM":
+    case "CART_ADD_ITEM": {
       const newItem = action.payload;
       const existItem = state.cart.cartItems.find(
         (item: any) => item.slug === newItem.slug
@@ -39,6 +39,17 @@ function reducer(state: IState, action: IAction): IState {
         : [...state.cart.cartItems, newItem];
 
       return { ...state, cart: { ...state.cart, cartItems } };
+    }
+
+    case "CART_REMOVE_ITEM": {
+      const itemToRemove = action.payload;
+
+      const cartItems = state.cart.cartItems.filter(
+        (item: { slug: string }) => item.slug !== itemToRemove.slug
+      );
+
+      return { ...state, cart: { ...state.cart, cartItems } };
+    }
 
     default:
       return state;

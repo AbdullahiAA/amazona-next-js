@@ -10,7 +10,7 @@ export default function ProductScreen() {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
 
-  const { query } = useRouter();
+  const { query, push } = useRouter();
   const { slug } = query;
 
   const product = data.products.find((p) => p.slug === slug);
@@ -34,6 +34,8 @@ export default function ProductScreen() {
       type: "CART_ADD_ITEM",
       payload: { ...product, quantity },
     });
+
+    push("/cart");
   }
 
   return (
