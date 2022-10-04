@@ -7,7 +7,8 @@ import data from "../../utils/data";
 import { Store } from "../../utils/Store";
 
 export default function ProductScreen() {
-  const { cart, dispatch } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
+  const { cart } = state;
 
   const { query } = useRouter();
   const { slug } = query;

@@ -9,8 +9,8 @@ type ILayout = {
 };
 
 export default function Layout({ title, children }: ILayout) {
-  const { cart, state, dispatch } = useContext(Store);
-  // const { cart } = state;
+  const { state } = useContext(Store);
+  const { cart } = state;
 
   return (
     <>
@@ -36,7 +36,10 @@ export default function Layout({ title, children }: ILayout) {
                   Cart
                   {cart.cartItems.length > 0 && (
                     <span className="ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
-                      {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                      {cart.cartItems.reduce(
+                        (a: number, c: { quantity: number }) => a + c.quantity,
+                        0
+                      )}
                     </span>
                   )}
                 </a>

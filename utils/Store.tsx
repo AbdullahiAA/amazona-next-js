@@ -1,11 +1,10 @@
 import { createContext, useReducer } from "react";
+import { IProduct } from "../types";
 
 interface IState {
   cart: {
-    cartItems: any[];
+    cartItems: IProduct[];
   };
-  state: any;
-  dispatch: any;
 }
 
 interface IAction {
@@ -21,11 +20,9 @@ const initialState: IState = {
   cart: {
     cartItems: [],
   },
-  state: null,
-  dispatch: null,
 };
 
-export const Store = createContext<IState>(initialState);
+export const Store = createContext<any>(null);
 
 function reducer(state: IState, action: IAction): IState {
   switch (action.type) {
@@ -50,7 +47,7 @@ function reducer(state: IState, action: IAction): IState {
 
 export function StoreProvider({ children }: IStoreProvider) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const value = { ...state, dispatch };
+  const value = { state, dispatch };
 
   return <Store.Provider value={value}>{children}</Store.Provider>;
 }
