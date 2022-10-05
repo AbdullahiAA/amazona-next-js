@@ -46,18 +46,18 @@ function Cart() {
             <table className="min-w-full">
               <thead className="border-b">
                 <tr>
-                  <th className="p-5 text-left">Item</th>
-                  <th className="p-5 text-right">Quantity</th>
-                  <th className="p-5 text-right">Price</th>
-                  <th className="p-5">Action</th>
+                  <th className="p-2 md:p-5 text-left">Item</th>
+                  <th className="p-2 md:p-5 text-right">Quantity</th>
+                  <th className="p-2 md:p-5 text-right">Price</th>
+                  <th className="p-2 md:p-5">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {cartItems.map((item: IProduct) => (
                   <tr key={item.slug} className="border-b">
-                    <td className="p-5 text-left">
+                    <td className="p-2 md:p-5 text-left">
                       <Link href={`/product/${item.slug}`}>
-                        <a className="flex items-center gap-2">
+                        <a className="flex items-center gap-2 border pr-1">
                           <Image
                             src={item.image}
                             alt={item.name}
@@ -68,7 +68,7 @@ function Cart() {
                         </a>
                       </Link>
                     </td>
-                    <td className="p-5 text-right">
+                    <td className="p-2 md:p-5 text-right">
                       <select
                         value={item.quantity}
                         onChange={(e) => updateQuantity(item, e.target.value)}
@@ -82,8 +82,8 @@ function Cart() {
                         )}
                       </select>
                     </td>
-                    <td className="p-5 text-right">{item.price}</td>
-                    <td className="p-5 text-center">
+                    <td className="p-2 md:p-5 text-right">{item.price}</td>
+                    <td className="p-2 md:p-5 text-center">
                       <button onClick={() => removeItem(item)}>
                         <XCircleIcon className="h-5 w-5" />
                       </button>
@@ -94,33 +94,35 @@ function Cart() {
             </table>
           </div>
 
-          <div className="card p-5">
-            <ul>
-              <li>
-                <div className="pb-3">
-                  Subtotal (
-                  {cartItems.reduce(
-                    (a: number, c: { quantity: number }) => a + c.quantity,
-                    0
-                  )}
-                  ) : $
-                  {cartItems.reduce(
-                    (a: number, c: { quantity: number; price: number }) =>
-                      a + c.quantity * c.price,
-                    0
-                  )}
-                </div>
-              </li>
+          <div>
+            <div className="card p-5">
+              <ul>
+                <li>
+                  <div className="pb-3">
+                    Subtotal (
+                    {cartItems.reduce(
+                      (a: number, c: { quantity: number }) => a + c.quantity,
+                      0
+                    )}
+                    ) : $
+                    {cartItems.reduce(
+                      (a: number, c: { quantity: number; price: number }) =>
+                        a + c.quantity * c.price,
+                      0
+                    )}
+                  </div>
+                </li>
 
-              <li>
-                <button
-                  onClick={() => router.push("/shipping")}
-                  className="primary-button w-full"
-                >
-                  Check out
-                </button>
-              </li>
-            </ul>
+                <li>
+                  <button
+                    onClick={() => router.push("/login?redirect=/shipping")}
+                    className="primary-button w-full"
+                  >
+                    Check out
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       )}
