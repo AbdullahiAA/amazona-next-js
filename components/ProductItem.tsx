@@ -1,13 +1,34 @@
-/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
+import { Store } from "../utils/Store";
 
 type IProductItem = {
   product: any;
 };
 
 export default function ProductItem({ product }: IProductItem) {
+  const { state, dispatch } = useContext(Store);
+  const { cart } = state;
+
+  function addToCart() {
+    const existItem = cart.cartItems.find(
+      (item: any) => item.slug === product?.slug
+    );
+
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+
+    if (product.countInStock < quantity) {
+      alert("Sorry, product is out of stock");
+      return;
+    }
+
+    dispatch({
+      type: "CART_ADD_ITEM",
+      payload: { ...product, quantity },
+    });
+  }
+
   return (
     <div className="card">
       <Link href={`/product/${product.slug}`}>
@@ -34,7 +55,7 @@ export default function ProductItem({ product }: IProductItem) {
 
         <p className="font-semibold">${product.price}</p>
 
-        <button className="primary-button" type="button">
+        <button className="primary-button" type="button" onClick={addToCart}>
           Add to cart
         </button>
       </div>
