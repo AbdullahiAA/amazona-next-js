@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Store } from "../utils/Store";
 
 type ILayout = {
@@ -11,6 +11,17 @@ type ILayout = {
 export default function Layout({ title, children }: ILayout) {
   const { state } = useContext(Store);
   const { cart } = state;
+
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+
+  useEffect(() => {
+    setCartItemsCount(
+      cart.cartItems.reduce(
+        (a: number, c: { quantity: number }) => a + c.quantity,
+        0
+      )
+    );
+  }, [cart.cartItems]);
 
   return (
     <>
@@ -34,12 +45,9 @@ export default function Layout({ title, children }: ILayout) {
               <Link href="/cart">
                 <a className="p-2">
                   Cart
-                  {cart.cartItems.length > 0 && (
+                  {cartItemsCount > 0 && (
                     <span className="ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
-                      {cart.cartItems.reduce(
-                        (a: number, c: { quantity: number }) => a + c.quantity,
-                        0
-                      )}
+                      {cartItemsCount}
                     </span>
                   )}
                 </a>

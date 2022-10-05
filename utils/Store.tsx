@@ -1,5 +1,6 @@
 import { createContext, useReducer } from "react";
 import { IProduct } from "../types";
+import Cookies from "js-cookie";
 
 interface IState {
   cart: {
@@ -16,10 +17,10 @@ interface IStoreProvider {
   children: any;
 }
 
+const cartFromCookies = Cookies.get("cart");
+
 const initialState: IState = {
-  cart: {
-    cartItems: [],
-  },
+  cart: cartFromCookies ? JSON.parse(cartFromCookies) : { cartItems: [] },
 };
 
 export const Store = createContext<any>(null);
@@ -38,6 +39,7 @@ function reducer(state: IState, action: IAction): IState {
           )
         : [...state.cart.cartItems, newItem];
 
+      Cookies.set("cart", JSON.stringify({ ...state.cart, cartItems }));
       return { ...state, cart: { ...state.cart, cartItems } };
     }
 
@@ -48,6 +50,7 @@ function reducer(state: IState, action: IAction): IState {
         (item: { slug: string }) => item.slug !== itemToRemove.slug
       );
 
+      Cookies.set("cart", JSON.stringify({ ...state.cart, cartItems }));
       return { ...state, cart: { ...state.cart, cartItems } };
     }
 
