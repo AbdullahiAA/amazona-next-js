@@ -10,14 +10,17 @@
   },
   "dependencies": {
     "@heroicons/react": "v1",
+    "bcryptjs": "^2.4.3",
     "heroicons": "^2.0.11",
     "js-cookie": "^3.0.1",
+    "mongoose": "^6.6.5",
     "next": "12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.36.1"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/js-cookie": "^3.0.2",
     "@types/node": "18.7.23",
     "@types/react": "18.0.21",

@@ -1,6 +1,21 @@
 import { IData } from "../types";
+import bcrypt from "bcryptjs";
 
 const data: IData = {
+  users: [
+    {
+      name: "Abdullah",
+      email: "admin@amazona.com",
+      password: bcrypt.hashSync("123456"),
+      isAdmin: true,
+    },
+    {
+      name: "Tunde",
+      email: "user@amazona.com",
+      password: bcrypt.hashSync("123456"),
+      isAdmin: false,
+    },
+  ],
   products: [
     {
       name: "Free Shirt",

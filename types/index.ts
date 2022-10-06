@@ -1,5 +1,13 @@
 export interface IData {
+  users: IUser[];
   products: IProduct[];
+}
+
+export interface IUser {
+  name: string;
+  email: string;
+  password: any;
+  isAdmin: boolean;
 }
 
 export interface IProduct {
