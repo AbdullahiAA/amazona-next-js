@@ -1,7 +1,10 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import React, { useContext, useEffect, useState } from "react";
 import { Store } from "../utils/Store";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type ILayout = {
   title?: string;
@@ -9,6 +12,8 @@ type ILayout = {
 };
 
 export default function Layout({ title, children }: ILayout) {
+  const { status, data: session } = useSession();
+
   const { state } = useContext(Store);
   const { cart } = state;
 
@@ -34,6 +39,8 @@ export default function Layout({ title, children }: ILayout) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <ToastContainer position="bottom-center" limit={1} />
+
       <div className="flex flex-col min-h-screen">
         <header className="shadow-lg p-4 sticky top-0 z-50 bg-white">
           <nav className="flex justify-between items-center">
@@ -53,9 +60,15 @@ export default function Layout({ title, children }: ILayout) {
                 </a>
               </Link>
 
-              <Link href="/login">
-                <a className="p-2">Login</a>
-              </Link>
+              {status === "loading" ? (
+                <p className="p-2">Loading</p>
+              ) : session?.user ? (
+                <p className="p-2">{session.user.name}</p>
+              ) : (
+                <Link href="/login">
+                  <a className="p-2">Login</a>
+                </Link>
+              )}
             </div>
           </nav>
         </header>
