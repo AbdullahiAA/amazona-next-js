@@ -67,6 +67,30 @@ function reducer(state: IState, action: IAction): IState {
       };
     }
 
+    case "SAVE_SHIPPING_ADDRESS": {
+      Cookies.set(
+        "cart",
+        JSON.stringify({
+          ...state.cart,
+          shippingAddress: {
+            ...state.cart.shippingAddress,
+            ...action.payload,
+          },
+        })
+      );
+
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          shippingAddress: {
+            ...state.cart.shippingAddress,
+            ...action.payload,
+          },
+        },
+      };
+    }
+
     default:
       return state;
   }
