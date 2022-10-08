@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { useContext, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -25,6 +26,8 @@ export default function Shipping() {
   const { cart } = state;
   const { shippingAddress } = cart;
 
+  const { push } = useRouter();
+
   useEffect(() => {
     setValue("fullName", shippingAddress?.fullName);
     setValue("address", shippingAddress?.address);
@@ -45,6 +48,8 @@ export default function Shipping() {
         type: "SAVE_SHIPPING_ADDRESS",
         payload: { address, city, country, fullName, postalCode },
       });
+
+      push("/payment");
     } catch (err) {
       toast.error(getError(err) || "An error occured!");
     }
@@ -143,3 +148,5 @@ export default function Shipping() {
     </Layout>
   );
 }
+
+Shipping.auth = true;
