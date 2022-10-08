@@ -53,7 +53,7 @@ function Cart() {
                 </tr>
               </thead>
               <tbody>
-                {cartItems.map((item: IProduct) => (
+                {cartItems?.map((item: IProduct) => (
                   <tr key={item.slug} className="border-b">
                     <td className="p-2 md:p-5 text-left">
                       <Link href={`/product/${item.slug}`}>
@@ -100,12 +100,12 @@ function Cart() {
                 <li>
                   <div className="pb-3">
                     Subtotal (
-                    {cartItems.reduce(
+                    {cartItems?.reduce(
                       (a: number, c: { quantity: number }) => a + c.quantity,
                       0
                     )}
                     ) : $
-                    {cartItems.reduce(
+                    {cartItems?.reduce(
                       (a: number, c: { quantity: number; price: number }) =>
                         a + c.quantity * c.price,
                       0

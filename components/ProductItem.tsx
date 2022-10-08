@@ -12,7 +12,7 @@ export default function ProductItem({ product }: IProductItem) {
   const { cart } = state;
 
   function addToCart() {
-    const existItem = cart.cartItems.find(
+    const existItem = cart?.cartItems?.find(
       (item: any) => item.slug === product?.slug
     );
 

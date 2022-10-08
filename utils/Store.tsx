@@ -5,6 +5,8 @@ import Cookies from "js-cookie";
 interface IState {
   cart: {
     cartItems: IProduct[];
+    shippingAddress?: { location: any };
+    paymentMethod?: string;
   };
 }
 
@@ -52,6 +54,17 @@ function reducer(state: IState, action: IAction): IState {
 
       Cookies.set("cart", JSON.stringify({ ...state.cart, cartItems }));
       return { ...state, cart: { ...state.cart, cartItems } };
+    }
+
+    case "CART_RESET": {
+      return {
+        ...state,
+        cart: {
+          cartItems: [],
+          shippingAddress: { location: {} },
+          paymentMethod: "",
+        },
+      };
     }
 
     default:
