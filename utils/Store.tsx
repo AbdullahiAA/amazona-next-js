@@ -22,7 +22,9 @@ interface IStoreProvider {
 const cartFromCookies = Cookies.get("cart");
 
 const initialState: IState = {
-  cart: cartFromCookies ? JSON.parse(cartFromCookies) : { cartItems: [] },
+  cart: cartFromCookies
+    ? JSON.parse(cartFromCookies)
+    : { cartItems: [], shippingAddress: {}, paymentMethod: "" },
 };
 
 export const Store = createContext<any>(null);
@@ -87,6 +89,24 @@ function reducer(state: IState, action: IAction): IState {
             ...state.cart.shippingAddress,
             ...action.payload,
           },
+        },
+      };
+    }
+
+    case "SAVE_PAYMENT_METHOD": {
+      Cookies.set(
+        "cart",
+        JSON.stringify({
+          ...state.cart,
+          paymentMethod: action.payload,
+        })
+      );
+
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          paymentMethod: action.payload,
         },
       };
     }
