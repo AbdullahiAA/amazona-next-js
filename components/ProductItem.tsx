@@ -1,6 +1,8 @@
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useContext } from "react";
+import { toast } from "react-toastify";
 import { Store } from "../utils/Store";
 
 type IProductItem = {
@@ -11,15 +13,19 @@ export default function ProductItem({ product }: IProductItem) {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
 
-  function addToCart() {
+  async function addToCart() {
+    toast.dismiss();
+
     const existItem = cart?.cartItems?.find(
       (item: any) => item.slug === product?.slug
     );
 
     const quantity = existItem ? existItem.quantity + 1 : 1;
 
-    if (product.countInStock < quantity) {
-      alert("Sorry, product is out of stock");
+    const { data } = await axios.get(`/api/products/${product._id}`);
+
+    if (data.countInStock < quantity) {
+      toast.error("Sorry, product is out of stock");
       return;
     }
 
@@ -27,6 +33,8 @@ export default function ProductItem({ product }: IProductItem) {
       type: "CART_ADD_ITEM",
       payload: { ...product, quantity },
     });
+
+    toast.success("Product added to the cart successfully");
   }
 
   return (

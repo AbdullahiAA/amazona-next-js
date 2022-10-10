@@ -2,11 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useContext } from "react";
 import { Layout } from "../components";
-import { IProduct } from "../types";
+import { IProductResponse } from "../types";
 import { Store } from "../utils/Store";
 import { XCircleIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function Cart() {
   const router = useRouter();
@@ -16,20 +18,28 @@ function Cart() {
     cart: { cartItems },
   } = state;
 
-  function removeItem(itemToRemove: IProduct) {
+  function removeItem(itemToRemove: IProductResponse) {
     dispatch({
       type: "CART_REMOVE_ITEM",
       payload: itemToRemove,
     });
   }
 
-  function updateQuantity(item: IProduct, qty: string) {
+  async function updateQuantity(item: IProductResponse, qty: string) {
     const quantity = Number(qty);
+    const { data } = await axios.get(`/api/products/${item._id}`);
+
+    if (data?.countInStock < quantity) {
+      toast.error("Sorry, product is out of stock");
+      return;
+    }
 
     dispatch({
       type: "CART_ADD_ITEM",
       payload: { ...item, quantity },
     });
+
+    toast.success("Product updated successfully");
   }
 
   return (
@@ -53,7 +63,7 @@ function Cart() {
                 </tr>
               </thead>
               <tbody>
-                {cartItems?.map((item: IProduct) => (
+                {cartItems?.map((item: IProductResponse) => (
                   <tr key={item.slug} className="border-b">
                     <td className="p-2 md:p-5 text-left">
                       <Link href={`/product/${item.slug}`}>

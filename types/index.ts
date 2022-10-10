@@ -23,3 +23,7 @@ export interface IProduct {
   quantity?: number;
   description: string;
 }
+
+export interface IProductResponse extends IProduct {
+  _id: string;
+}
