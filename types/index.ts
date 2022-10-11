@@ -27,3 +27,7 @@ export interface IProduct {
 export interface IProductResponse extends IProduct {
   _id: string;
 }
+
+export interface ICartItem extends IProductResponse {
+  quantity: number;
+}

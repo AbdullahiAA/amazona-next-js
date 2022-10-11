@@ -18,6 +18,10 @@ a {
   box-sizing: border-box;
 }
 
+button:disabled {
+  @apply cursor-not-allowed;
+}
+
 .card {
   @apply mb-5 rounded-lg border border-gray-200 shadow-md;
 }
