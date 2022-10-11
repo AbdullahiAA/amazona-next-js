@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
-import { CheckoutWizard, Layout } from "../components";
+import { Button, CheckoutWizard, Layout } from "../components";
 import { getError } from "../utils/error";
 import { Store } from "../utils/Store";
 
@@ -15,6 +15,8 @@ type ShippingAddress = {
 };
 
 export default function Shipping() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -43,6 +45,8 @@ export default function Shipping() {
     fullName,
     postalCode,
   }) => {
+    setIsLoading(true);
+
     try {
       dispatch({
         type: "SAVE_SHIPPING_ADDRESS",
@@ -50,8 +54,10 @@ export default function Shipping() {
       });
 
       push("/payment");
+      setIsLoading(false);
     } catch (err) {
       toast.error(getError(err) || "An error occured!");
+      setIsLoading(false);
     }
   };
 
@@ -142,7 +148,7 @@ export default function Shipping() {
         </div>
 
         <div className="flex justify-between">
-          <button className="primary-button">Next</button>
+          <Button isLoading={isLoading}>Next</Button>
         </div>
       </form>
     </Layout>

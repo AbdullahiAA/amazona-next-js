@@ -1,6 +1,6 @@
 import Link from "next/link";
-import React, { useEffect } from "react";
-import { Layout } from "../components";
+import React, { useEffect, useState } from "react";
+import { Button, Layout } from "../components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { signIn, useSession } from "next-auth/react";
 import { getError } from "../utils/error";
@@ -13,6 +13,8 @@ type LoginDetails = {
 };
 
 export default function Login() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { data: session } = useSession();
   const router = useRouter();
   const { redirect }: { redirect?: URL } = router.query;
@@ -29,14 +31,18 @@ export default function Login() {
     formState: { errors },
   } = useForm<LoginDetails>();
   const onSubmit: SubmitHandler<LoginDetails> = async ({ email, password }) => {
+    setIsLoading(true);
+
     try {
       const result = await signIn("credentials", {
         redirect: false,
         email,
         password,
       });
+      setIsLoading(false);
     } catch (err) {
       toast.error(getError(err) || "An error occured!");
+      setIsLoading(false);
     }
   };
 
@@ -88,7 +94,7 @@ export default function Login() {
         </div>
 
         <div>
-          <button className="primary-button">Login</button>
+          <Button isLoading={isLoading}>Login</Button>
         </div>
 
         <div>

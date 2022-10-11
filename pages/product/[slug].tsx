@@ -1,20 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Layout } from "../../components";
+import { Button, Layout } from "../../components";
 import { Store } from "../../utils/Store";
 import Product from "../../models/Product";
 import db from "../../utils/db";
 import { IProductResponse } from "../../types";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { TiArrowBack } from "react-icons/ti";
 
 type Props = {
   product: IProductResponse;
 };
 
 export default function ProductScreen({ product }: Props) {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
 
@@ -25,6 +28,8 @@ export default function ProductScreen({ product }: Props) {
   }
 
   async function addToCart() {
+    setIsLoading(true);
+
     const existItem = cart.cartItems.find(
       (item: any) => item.slug === product?.slug
     );
@@ -34,6 +39,8 @@ export default function ProductScreen({ product }: Props) {
 
     if (data?.countInStock < quantity) {
       toast.error("Sorry, product is out of stock");
+      setIsLoading(false);
+
       return;
     }
 
@@ -43,12 +50,17 @@ export default function ProductScreen({ product }: Props) {
     });
 
     push("/cart");
+    setIsLoading(false);
   }
 
   return (
     <Layout title={product.name}>
       <div className="py-2">
-        <Link href="/">back to products</Link>
+        <Link href="/">
+          <a className="flex items-center gap-1 w-fit">
+            <TiArrowBack /> back to products
+          </a>
+        </Link>
       </div>
 
       <div className="grid gap-4 md:grid-cols-4">
@@ -88,9 +100,9 @@ export default function ProductScreen({ product }: Props) {
             <p>{product.countInStock > 0 ? "In stock" : "Unavailable"}</p>
           </div>
 
-          <button className="primary-button w-full" onClick={addToCart}>
+          <Button onClick={addToCart} isLoading={isLoading}>
             Add to cart
-          </button>
+          </Button>
         </div>
       </div>
     </Layout>

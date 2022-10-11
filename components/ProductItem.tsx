@@ -1,19 +1,24 @@
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { Store } from "../utils/Store";
+import Button from "./Button";
 
 type IProductItem = {
   product: any;
 };
 
 export default function ProductItem({ product }: IProductItem) {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
 
   async function addToCart() {
+    setIsLoading(true);
+
     toast.dismiss();
 
     const existItem = cart?.cartItems?.find(
@@ -35,6 +40,7 @@ export default function ProductItem({ product }: IProductItem) {
     });
 
     toast.success("Product added to the cart successfully");
+    setIsLoading(false);
   }
 
   return (
@@ -63,9 +69,9 @@ export default function ProductItem({ product }: IProductItem) {
 
         <p className="font-semibold">${product.price}</p>
 
-        <button className="primary-button" type="button" onClick={addToCart}>
+        <Button type="button" onClick={addToCart} isLoading={isLoading}>
           Add to cart
-        </button>
+        </Button>
       </div>
     </div>
   );

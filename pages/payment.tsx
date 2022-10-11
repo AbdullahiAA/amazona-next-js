@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
-import { CheckoutWizard, Layout } from "../components";
+import { Button, CheckoutWizard, Layout } from "../components";
 import { getError } from "../utils/error";
 import { Store } from "../utils/Store";
 
@@ -68,14 +67,14 @@ export default function Payment() {
         ))}
 
         <div className="flex justify-between">
-          <button
-            className="default-button"
+          <Button
+            variant="default"
             type="button"
             onClick={() => push("/shipping")}
           >
             Back
-          </button>
-          <button className="primary-button">Next</button>
+          </Button>
+          <Button>Next</Button>
         </div>
       </form>
     </Layout>
