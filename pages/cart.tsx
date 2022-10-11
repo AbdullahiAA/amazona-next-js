@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 import { Layout } from "../components";
 import { IProductResponse } from "../types";
 import { Store } from "../utils/Store";
-import { XCircleIcon } from "@heroicons/react/outline";
+import { BsXCircle } from "react-icons/bs";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import axios from "axios";
@@ -94,8 +94,11 @@ function Cart() {
                     </td>
                     <td className="p-2 md:p-5 text-right">{item.price}</td>
                     <td className="p-2 md:p-5 text-center">
-                      <button onClick={() => removeItem(item)}>
-                        <XCircleIcon className="h-5 w-5" />
+                      <button className="flex items-center justify-center w-full cursor-default">
+                        <BsXCircle
+                          onClick={() => removeItem(item)}
+                          className="h-5 w-5 cursor-pointer"
+                        />
                       </button>
                     </td>
                   </tr>
