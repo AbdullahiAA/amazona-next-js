@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useContext } from "react";
-import { Layout } from "../components";
+import { Button, Layout } from "../components";
 import { IProductResponse } from "../types";
 import { Store } from "../utils/Store";
 import { BsXCircle } from "react-icons/bs";
@@ -129,12 +129,12 @@ function Cart() {
                 </li>
 
                 <li>
-                  <button
+                  <Button
                     onClick={() => router.push("/login?redirect=/shipping")}
-                    className="primary-button w-full"
+                    className="w-full"
                   >
                     Check out
-                  </button>
+                  </Button>
                 </li>
               </ul>
             </div>

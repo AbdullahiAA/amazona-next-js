@@ -18,7 +18,7 @@ export default function Payment() {
     e.preventDefault();
 
     if (!selectedPaymentMethod) {
-      return toast.error("Payment method is required");
+      return toast.error("Please choose a payment method");
     }
 
     try {
