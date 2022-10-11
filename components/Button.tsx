@@ -19,6 +19,7 @@ export default function Button({
   return (
     <button
       className={`${variant}-button flex items-center justify-center gap-1 ${className}`}
+      disabled={isLoading}
       {...rest}
     >
       {isLoading && <ImSpinner2 className="animate-spin" />}
