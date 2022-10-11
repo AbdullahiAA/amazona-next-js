@@ -9,15 +9,12 @@ type IAuth = {
   children: any;
 };
 
-type IMyApp = {
+type IMyApp = AppProps & {
   Component: { auth?: boolean };
   pageProps: { session?: any };
 };
 
-function MyApp({
-  Component,
-  pageProps: { session, ...pageProps },
-}: AppProps & IMyApp) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: IMyApp) {
   return (
     <SessionProvider session={session}>
       <StoreProvider>

@@ -48,7 +48,7 @@ export default function Layout({ title, children }: ILayout) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <ToastContainer position="bottom-center" limit={1} />
+      <ToastContainer position="bottom-center" theme="dark" />
 
       <div className="flex flex-col min-h-screen">
         <header className="shadow-lg p-4 sticky top-0 z-50 bg-white">

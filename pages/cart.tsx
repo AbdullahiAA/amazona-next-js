@@ -26,6 +26,8 @@ function Cart() {
   }
 
   async function updateQuantity(item: IProductResponse, qty: string) {
+    toast.dismiss();
+
     const quantity = Number(qty);
     const { data } = await axios.get(`/api/products/${item._id}`);
 
